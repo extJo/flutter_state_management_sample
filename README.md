@@ -1,16 +1,23 @@
-# flutter_state_sample
+# Flutter State management smaple
 
-A new Flutter application.
+I use [github trend api][github_trend_api]
 
-## Getting Started
+## How to use this project?
 
-This project is a starting point for a Flutter application.
+this project three branch
 
-A few resources to get you started if this is your first Flutter project:
+* master - basic flutter project (counter)
+* ordinary - state managed with [Key][key_doc]
+* inherited_widget - state managed with [InheritedWidget][inherited_widget_doc]
+* provider - state managed with [Provider][provider_doc]
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+If you want to see another state management
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+1. clone this project 
+2. move this project
+3. ```git checkout <want_to_branch_name>```
+
+[github_trend_api]:https://github.com/huchenme/github-trending-api#rest-api
+[key_doc]:https://flutter.dev/docs/development/ui/widgets-intro#keys
+[inherited_widget_doc]:https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html
+[provider_doc]:https://github.com/rrousselGit/provider
