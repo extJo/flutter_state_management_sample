@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_sample/view/search_bar.dart';
+import 'package:flutter_state_sample/model/language.dart';
+import 'package:flutter_state_sample/view/lang_dropdown.dart';
 import 'package:flutter_state_sample/view/trend_list_view.dart';
 
 class GithubTrendPage extends StatefulWidget {
@@ -10,16 +11,16 @@ class GithubTrendPage extends StatefulWidget {
 }
 
 class _GithubTrendPageState extends State<GithubTrendPage> {
-  String searchTerm;
+  String language;
 
-  void setSearchTerm(String term) {
+  void setLanguage(String language) {
     setState(() {
-      this.searchTerm = term;
+      this.language = language;
     });
   }
 
-  String getSearchTerm() {
-    return this.searchTerm;
+  String getLanguage() {
+    return this.language;
   }
 
   @override
@@ -30,8 +31,8 @@ class _GithubTrendPageState extends State<GithubTrendPage> {
       ),
       body: Column(
         children: <Widget>[
-          SearchBar(setSearchTerm),
-          Expanded(child: TrendListView(getSearchTerm))
+          LanguageDropDown(setLanguage),
+          Expanded(child: TrendListView(getLanguage))
         ],
       )
     );
