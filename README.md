@@ -1,4 +1,4 @@
-# Flutter State management smaple
+# Flutter State management sample
 
 I use [github trend api][github_trend_api]
 
