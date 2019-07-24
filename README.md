@@ -6,8 +6,7 @@ I use [github trend api][github_trend_api]
 
 this project three branch
 
-* master - basic flutter project (counter)
-* ordinary - state managed with [Key][key_doc]
+* master - state managed with [Key][key_doc]
 * inherited_widget - state managed with [InheritedWidget][inherited_widget_doc]
 * provider - state managed with [Provider][provider_doc]
 
