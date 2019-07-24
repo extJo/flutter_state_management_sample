@@ -75,7 +75,7 @@ class _TrendListViewState extends State<TrendListView> {
                     itemBuilder: (BuildContext context, int index) =>
                         _trendListViewItem(snapshot.data[index]));
               } else {
-                return Text('Error: ${snapshot.error}');
+                return Center(child: Text('Error: ${snapshot.error}'));
               }
           }
           return null;
@@ -83,9 +83,9 @@ class _TrendListViewState extends State<TrendListView> {
   }
 
   Future<List<GithubTrendItem>> getTrendList() async {
-    if (this.widget.getLanguage != null) {
+    if (this.widget.getLanguage() != null) {
       final endPoint =
-          'https://github-trending-api.now.sh/repositories?language=${this.widget.getLanguage()}&since=daily';
+          'https://github-trending-api.now.sh/repositories?language=${this.widget.getLanguage()}&since=monthly';
       final response = await http.get(endPoint);
 
       if (response.statusCode == 200) {
