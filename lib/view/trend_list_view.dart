@@ -85,7 +85,7 @@ class _TrendListViewState extends State<TrendListView> {
   Future<List<GithubTrendItem>> getTrendList() async {
     if (this.widget.getLanguage() != null) {
       final endPoint =
-          'https://github-trending-api.now.sh/repositories?language=${this.widget.getLanguage()}&since=monthly';
+          'https://github-trending-api.now.sh/repositories?language=${this.widget.getLanguage().id}&since=monthly';
       final response = await http.get(endPoint);
 
       if (response.statusCode == 200) {

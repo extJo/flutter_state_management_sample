@@ -11,18 +11,20 @@ class LanguageDropDown extends StatefulWidget {
 }
 
 class LanguageDropDownState extends State<LanguageDropDown> {
-  String selectedLanguage;
+  Language selectedLanguage;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _dropDownSelect(String languageId) {
+  void _dropDownSelect(Language language) {
+    print(language);
+
     setState(() {
-      selectedLanguage = languageId;
+      selectedLanguage = language;
     });
-    widget.setLanguage(selectedLanguage);
+    widget.setLanguage(language);
   }
 
   @override
@@ -39,9 +41,9 @@ class LanguageDropDownState extends State<LanguageDropDown> {
                 value: selectedLanguage,
                 onChanged: _dropDownSelect,
                 items: languages
-                    .map((Language language) => DropdownMenuItem<String>(
+                    .map((Language language) => DropdownMenuItem<Language>(
                           child: Text('${language.name}'),
-                          value: language.id,
+                          value: language,
                         ))
                     .toList(),
               );

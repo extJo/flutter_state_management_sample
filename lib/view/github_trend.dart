@@ -11,15 +11,15 @@ class GithubTrendPage extends StatefulWidget {
 }
 
 class _GithubTrendPageState extends State<GithubTrendPage> {
-  String language;
+  Language language;
 
-  void setLanguage(String language) {
+  void setLanguage(Language language) {
     setState(() {
       this.language = language;
     });
   }
 
-  String getLanguage() {
+  Language getLanguage() {
     return this.language;
   }
 
