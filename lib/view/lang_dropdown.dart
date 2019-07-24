@@ -2,29 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_sample/model/language.dart';
 import 'dart:convert';
 
-class LanguageDropDown extends StatefulWidget {
-  final Function setLanguage;
+import 'package:flutter_state_sample/view/github_trend.dart';
 
-  LanguageDropDown(this.setLanguage, {Key key}) : super(key: key);
+class LanguageDropDown extends StatefulWidget {
+  LanguageDropDown({Key key}) : super(key: key);
 
   LanguageDropDownState createState() => LanguageDropDownState();
 }
 
 class LanguageDropDownState extends State<LanguageDropDown> {
-  Language selectedLanguage;
-
   @override
   void initState() {
     super.initState();
-  }
-
-  void _dropDownSelect(Language language) {
-    print(language);
-
-    setState(() {
-      selectedLanguage = language;
-    });
-    widget.setLanguage(language);
   }
 
   @override
@@ -37,9 +26,11 @@ class LanguageDropDownState extends State<LanguageDropDown> {
               List<Language> languages = parseJosn(snapshot.data.toString());
 
               return DropdownButton(
-                hint: Text(languages[0].name),
-                value: selectedLanguage,
-                onChanged: _dropDownSelect,
+                // hint: Text(languages[0].name),
+                value: GithubTrendPage.of(context).language,
+                onChanged: (Language language) {
+                  GithubTrendPage.of(context).update(language);
+                },
                 items: languages
                     .map((Language language) => DropdownMenuItem<Language>(
                           child: Text('${language.name}'),

@@ -3,38 +3,69 @@ import 'package:flutter_state_sample/model/language.dart';
 import 'package:flutter_state_sample/view/lang_dropdown.dart';
 import 'package:flutter_state_sample/view/trend_list_view.dart';
 
+class InheritedGithubTrendPage extends InheritedWidget {
+  final _GithubTrendPageState trendPageState;
+
+  InheritedGithubTrendPage({
+    Key key,
+    @required this.trendPageState,
+    @required Widget child,
+  }) : super(key: key, child: child);
+
+  @override
+  bool updateShouldNotify(InheritedGithubTrendPage oldWidget) => true;
+}
+
 class GithubTrendPage extends StatefulWidget {
-  GithubTrendPage({Key key}) : super(key: key);
+  final Widget child;
+
+  GithubTrendPage({Key key, this.child}) : super(key: key);
 
   @override
   _GithubTrendPageState createState() => _GithubTrendPageState();
+
+  static _GithubTrendPageState of(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
+            as InheritedGithubTrendPage)
+        .trendPageState;
+  }
+
+  static void updateLanguage(BuildContext context, Language language) {
+    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
+            as InheritedGithubTrendPage)
+        .trendPageState
+        .update(language);
+  }
 }
 
 class _GithubTrendPageState extends State<GithubTrendPage> {
   Language language;
 
-  void setLanguage(Language language) {
-    setState(() {
-      this.language = language;
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
-  Language getLanguage() {
-    return this.language;
+  void update(Language newLanguage) {
+    setState(() {
+      language = newLanguage;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Github Trend Sample'),
-      ),
-      body: Column(
-        children: <Widget>[
-          LanguageDropDown(setLanguage),
-          Expanded(child: TrendListView(getLanguage))
-        ],
-      )
+    return InheritedGithubTrendPage(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Github Trend Sample'),
+          ),
+          body: Column(
+            children: <Widget>[
+              LanguageDropDown(),
+              Expanded(child: TrendListView())
+            ],
+          )),
+      trendPageState: this,
     );
   }
 }

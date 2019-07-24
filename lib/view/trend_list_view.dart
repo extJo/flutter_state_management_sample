@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_sample/model/github_trend.dart';
+import 'package:flutter_state_sample/model/language.dart';
+import 'package:flutter_state_sample/view/github_trend.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class TrendListView extends StatefulWidget {
-  final Function getLanguage;
-  TrendListView(this.getLanguage, {Key key}) : super(key: key);
+  TrendListView({Key key}) : super(key: key);
 
   _TrendListViewState createState() => _TrendListViewState();
 }
@@ -16,7 +17,7 @@ class _TrendListViewState extends State<TrendListView> {
   @override
   void initState() {
     super.initState();
-    githubTrend = getTrendList();
+    githubTrend = getTrendList(null);
   }
 
   Widget _trendListViewItem(GithubTrendItem itemData) {
@@ -57,8 +58,10 @@ class _TrendListViewState extends State<TrendListView> {
 
   @override
   Widget build(BuildContext context) {
+    final language = GithubTrendPage.of(context).language;
+
     return FutureBuilder(
-        future: getTrendList(),
+        future: getTrendList(language),
         builder: (BuildContext context,
             AsyncSnapshot<List<GithubTrendItem>> snapshot) {
           switch (snapshot.connectionState) {
@@ -82,10 +85,10 @@ class _TrendListViewState extends State<TrendListView> {
         });
   }
 
-  Future<List<GithubTrendItem>> getTrendList() async {
-    if (this.widget.getLanguage() != null) {
+  Future<List<GithubTrendItem>> getTrendList(Language language) async {
+    if (language != null) {
       final endPoint =
-          'https://github-trending-api.now.sh/repositories?language=${this.widget.getLanguage().id}&since=monthly';
+          'https://github-trending-api.now.sh/repositories?language=${language.id}&since=monthly';
       final response = await http.get(endPoint);
 
       if (response.statusCode == 200) {
