@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_state_sample/model/github_trend.dart';
 import 'package:flutter_state_sample/model/language.dart';
 import 'dart:convert';
-
-import 'package:flutter_state_sample/view/github_trend.dart';
+import 'package:provider/provider.dart';
 
 class LanguageDropDown extends StatefulWidget {
   LanguageDropDown({Key key}) : super(key: key);
@@ -29,15 +29,14 @@ class LanguageDropDownState extends State<LanguageDropDown> {
                   return Text('Loading.....');
                 case ConnectionState.active:
                 case ConnectionState.done:
-                  List<Language> languages =
-                      parseJosn(snapshot.data.toString());
-
                   return DropdownButton(
-                    value: GithubTrendPage.of(context).language,
+                    hint: Text("Choose Language"),
+                    value: Provider.of<GitHubTrendModel>(context).language,
                     onChanged: (Language language) {
-                      GithubTrendPage.of(context).update(language);
+                      Provider.of<GitHubTrendModel>(context)
+                          .changeLanguage(language);
                     },
-                    items: languages
+                    items: parseJosn(snapshot.data.toString())
                         .map((Language language) => DropdownMenuItem<Language>(
                               child: Text('${language.name}'),
                               value: language,

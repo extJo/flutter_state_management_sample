@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_sample/model/language.dart';
+import 'package:flutter_state_sample/model/github_trend.dart';
 import 'package:flutter_state_sample/view/lang_dropdown.dart';
 import 'package:flutter_state_sample/view/trend_list_view.dart';
-
-class InheritedGithubTrendPage extends InheritedWidget {
-  final _GithubTrendPageState trendPageState;
-
-  InheritedGithubTrendPage({
-    Key key,
-    @required this.trendPageState,
-    @required Widget child,
-  }) : super(key: key, child: child);
-
-  @override
-  bool updateShouldNotify(InheritedGithubTrendPage oldWidget) => true;
-}
+import 'package:provider/provider.dart';
 
 class GithubTrendPage extends StatefulWidget {
   final Widget child;
@@ -23,38 +11,13 @@ class GithubTrendPage extends StatefulWidget {
 
   @override
   _GithubTrendPageState createState() => _GithubTrendPageState();
-
-  static _GithubTrendPageState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
-            as InheritedGithubTrendPage)
-        .trendPageState;
-  }
-
-  static void updateLanguage(BuildContext context, Language language) {
-    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
-            as InheritedGithubTrendPage)
-        .trendPageState
-        .update(language);
-  }
 }
 
 class _GithubTrendPageState extends State<GithubTrendPage> {
-  Language language;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void update(Language newLanguage) {
-    setState(() {
-      language = newLanguage;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return InheritedGithubTrendPage(
+    return ChangeNotifierProvider(
+      builder: (context) => GitHubTrendModel(),
       child: Scaffold(
           appBar: AppBar(
             title: Text('Github Trend Sample'),
@@ -65,7 +28,6 @@ class _GithubTrendPageState extends State<GithubTrendPage> {
               Expanded(child: TrendListView())
             ],
           )),
-      trendPageState: this,
     );
   }
 }

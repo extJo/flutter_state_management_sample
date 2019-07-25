@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_state_sample/model/github_trend.dart';
 import 'package:flutter_state_sample/model/github_trend_item.dart';
 import 'package:flutter_state_sample/model/language.dart';
-import 'package:flutter_state_sample/view/github_trend.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:provider/provider.dart';
 
 class TrendListView extends StatefulWidget {
   TrendListView({Key key}) : super(key: key);
@@ -51,7 +53,7 @@ class _TrendListViewState extends State<TrendListView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getTrendList(GithubTrendPage.of(context).language),
+        future: getTrendList(Provider.of<GitHubTrendModel>(context).language),
         builder: (BuildContext context,
             AsyncSnapshot<List<GithubTrendItem>> snapshot) {
           switch (snapshot.connectionState) {
@@ -68,7 +70,7 @@ class _TrendListViewState extends State<TrendListView> {
                     itemBuilder: (BuildContext context, int index) =>
                         _trendListViewItem(snapshot.data[index]));
               } else if (snapshot.data.isEmpty) {
-                return Center(child: Text('Choose Language'));
+                return Center(child: Text('No Result'));
               } else {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
