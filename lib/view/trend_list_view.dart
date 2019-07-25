@@ -68,7 +68,7 @@ class _TrendListViewState extends State<TrendListView> {
                     itemBuilder: (BuildContext context, int index) =>
                         _trendListViewItem(snapshot.data[index]));
               } else if (snapshot.data.isEmpty) {
-                return Center(child: Text('Choose Language'));
+                return Center(child: Text('No Results'));
               } else {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }

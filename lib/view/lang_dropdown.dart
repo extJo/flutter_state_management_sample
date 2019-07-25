@@ -33,6 +33,7 @@ class LanguageDropDownState extends State<LanguageDropDown> {
                       parseJosn(snapshot.data.toString());
 
                   return DropdownButton(
+                    hint: Text("Choose Language"),
                     value: GithubTrendPage.of(context).language,
                     onChanged: (Language language) {
                       GithubTrendPage.of(context).update(language);
