@@ -16,13 +16,13 @@ class GithubTrendPage extends StatefulWidget {
 class _GithubTrendPageState extends State<GithubTrendPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Github Trend Sample'),
-      ),
-      body: ChangeNotifierProvider(
-          builder: (context) => GitHubTrendModel(),
-          child: Column(
+    return ChangeNotifierProvider(
+      builder: (context) => GitHubTrendModel(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Github Trend Sample'),
+          ),
+          body: Column(
             children: <Widget>[
               LanguageDropDown(),
               Expanded(child: TrendListView())
