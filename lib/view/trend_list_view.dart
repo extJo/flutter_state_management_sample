@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_sample/model/github_trend.dart';
+import 'package:flutter_state_sample/model/github_trend_item.dart';
 import 'package:flutter_state_sample/model/language.dart';
 import 'package:flutter_state_sample/view/github_trend.dart';
 import 'package:http/http.dart' as http;
