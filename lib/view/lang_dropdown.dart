@@ -19,8 +19,6 @@ class LanguageDropDownState extends State<LanguageDropDown> {
   }
 
   void _dropDownSelect(Language language) {
-    print(language);
-
     setState(() {
       selectedLanguage = language;
     });
@@ -34,19 +32,28 @@ class LanguageDropDownState extends State<LanguageDropDown> {
             future: DefaultAssetBundle.of(context)
                 .loadString('assets/language.json'),
             builder: (BuildContext context, snapshot) {
-              List<Language> languages = parseJosn(snapshot.data.toString());
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Text('Loading.....');
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  List<Language> languages =
+                      parseJosn(snapshot.data.toString());
 
-              return DropdownButton(
-                hint: Text(languages[0].name),
-                value: selectedLanguage,
-                onChanged: _dropDownSelect,
-                items: languages
-                    .map((Language language) => DropdownMenuItem<Language>(
-                          child: Text('${language.name}'),
-                          value: language,
-                        ))
-                    .toList(),
-              );
+                  return DropdownButton(
+                    hint: Text(languages[0].name),
+                    value: selectedLanguage,
+                    onChanged: _dropDownSelect,
+                    items: languages
+                        .map((Language language) => DropdownMenuItem<Language>(
+                              child: Text('${language.name}'),
+                              value: language,
+                            ))
+                        .toList(),
+                  );
+              }
+              return Text("error");
             }));
   }
 
