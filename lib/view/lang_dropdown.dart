@@ -23,21 +23,29 @@ class LanguageDropDownState extends State<LanguageDropDown> {
             future: DefaultAssetBundle.of(context)
                 .loadString('assets/language.json'),
             builder: (BuildContext context, snapshot) {
-              List<Language> languages = parseJosn(snapshot.data.toString());
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Text('Loading.....');
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  List<Language> languages =
+                      parseJosn(snapshot.data.toString());
 
-              return DropdownButton(
-                // hint: Text(languages[0].name),
-                value: GithubTrendPage.of(context).language,
-                onChanged: (Language language) {
-                  GithubTrendPage.of(context).update(language);
-                },
-                items: languages
-                    .map((Language language) => DropdownMenuItem<Language>(
-                          child: Text('${language.name}'),
-                          value: language,
-                        ))
-                    .toList(),
-              );
+                  return DropdownButton(
+                    value: GithubTrendPage.of(context).language,
+                    onChanged: (Language language) {
+                      GithubTrendPage.of(context).update(language);
+                    },
+                    items: languages
+                        .map((Language language) => DropdownMenuItem<Language>(
+                              child: Text('${language.name}'),
+                              value: language,
+                            ))
+                        .toList(),
+                  );
+              }
+              return Text("error");
             }));
   }
 

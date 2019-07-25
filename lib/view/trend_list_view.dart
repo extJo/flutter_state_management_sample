@@ -12,14 +12,6 @@ class TrendListView extends StatefulWidget {
 }
 
 class _TrendListViewState extends State<TrendListView> {
-  Future<List<GithubTrendItem>> githubTrend;
-
-  @override
-  void initState() {
-    super.initState();
-    githubTrend = getTrendList(null);
-  }
-
   Widget _trendListViewItem(GithubTrendItem itemData) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -58,10 +50,8 @@ class _TrendListViewState extends State<TrendListView> {
 
   @override
   Widget build(BuildContext context) {
-    final language = GithubTrendPage.of(context).language;
-
     return FutureBuilder(
-        future: getTrendList(language),
+        future: getTrendList(GithubTrendPage.of(context).language),
         builder: (BuildContext context,
             AsyncSnapshot<List<GithubTrendItem>> snapshot) {
           switch (snapshot.connectionState) {
@@ -77,11 +67,13 @@ class _TrendListViewState extends State<TrendListView> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) =>
                         _trendListViewItem(snapshot.data[index]));
+              } else if (snapshot.data.isEmpty) {
+                return Center(child: Text('Choose Language'));
               } else {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
           }
-          return null;
+          return Text("error");
         });
   }
 
