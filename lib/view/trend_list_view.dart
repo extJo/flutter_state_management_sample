@@ -50,10 +50,9 @@ class _TrendListViewState extends State<TrendListView> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _trendList(Language language) {
     return FutureBuilder(
-        future: getTrendList(Provider.of<GitHubTrendModel>(context).language),
+        future: _getTrendList(language),
         builder: (BuildContext context,
             AsyncSnapshot<List<GithubTrendItem>> snapshot) {
           switch (snapshot.connectionState) {
@@ -79,7 +78,14 @@ class _TrendListViewState extends State<TrendListView> {
         });
   }
 
-  Future<List<GithubTrendItem>> getTrendList(Language language) async {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<GitHubTrendModel>(
+      builder: (context, trend, child) => _trendList(trend.language),
+    );
+  }
+
+  Future<List<GithubTrendItem>> _getTrendList(Language language) async {
     if (language != null) {
       final endPoint =
           'https://github-trending-api.now.sh/repositories?language=${language.id}&since=monthly';
