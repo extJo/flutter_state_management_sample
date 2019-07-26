@@ -29,13 +29,6 @@ class GithubTrendPage extends StatefulWidget {
             as InheritedGithubTrendPage)
         .trendPageState;
   }
-
-  static void updateLanguage(BuildContext context, Language language) {
-    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
-            as InheritedGithubTrendPage)
-        .trendPageState
-        .update(language);
-  }
 }
 
 class _GithubTrendPageState extends State<GithubTrendPage> {
