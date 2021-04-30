@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_sample/model/language.dart';
-import 'package:flutter_state_sample/view/github_trend.dart';
+import 'package:flutter_state_sample/model/github_trend_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../model/github_trend.dart';
+import '../model/language.dart';
+import 'github_trend.dart';
 
 class TrendListView extends StatefulWidget {
   TrendListView({Key key}) : super(key: key);

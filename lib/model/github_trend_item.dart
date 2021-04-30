@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class GithubTrendItem {
   final String repo;
   final String desc;
