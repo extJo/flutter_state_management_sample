@@ -1,19 +1,16 @@
 class Language {
   final String id;
-  final String name;
 
-  const Language({this.id, this.name});
+  const Language(this.id);
 
-  factory Language.fromJson(Map<String, dynamic> json) {
-    return Language(id: json['urlParam'], name: json['name']);
+  factory Language.fromJson(String id) {
+    return Language(id);
   }
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other))
-      return true;
-    if (other.runtimeType != runtimeType)
-      return false;
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
     final Language otherLanguage = other;
     return otherLanguage.id == id;
   }

@@ -36,9 +36,9 @@ class LanguageDropDownState extends State<LanguageDropDown> {
                       Provider.of<GitHubTrendModel>(context)
                           .changeLanguage(language);
                     },
-                    items: parseJosn(snapshot.data.toString())
+                    items: parseJson(snapshot.data.toString())
                         .map((Language language) => DropdownMenuItem<Language>(
-                              child: Text('${language.name}'),
+                              child: Text('${language.id}'),
                               value: language,
                             ))
                         .toList(),
@@ -48,11 +48,13 @@ class LanguageDropDownState extends State<LanguageDropDown> {
             }));
   }
 
-  List<Language> parseJosn(String response) {
-    if (response == null) {
+  List<Language> parseJson(String input) {
+    if (input == null) {
       return [];
     }
-    final parsed = json.decode(response.toString());
-    return parsed.map<Language>((json) => Language.fromJson(json)).toList();
+    return json
+        .decode(input.toString())
+        .map<Language>((item) => Language.fromJson(item))
+        .toList();
   }
 }

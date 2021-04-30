@@ -8,17 +8,17 @@ class GithubTrendPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: AppBar(
-            title: Text('Github Trend Sample'),
-          ),
-          body: ChangeNotifierProvider(
-            builder: (context) => GitHubTrendModel(),
-            child: Column(
-              children: <Widget>[
-                LanguageDropDown(),
-                Expanded(child: TrendListView())
-              ],
-            )),
+      appBar: AppBar(
+        title: Text('Github Trend Sample'),
+      ),
+      body: ChangeNotifierProvider(
+          create: (context) => GitHubTrendModel(),
+          child: Column(
+            children: <Widget>[
+              LanguageDropDown(),
+              Expanded(child: TrendListView())
+            ],
+          )),
     );
   }
 }

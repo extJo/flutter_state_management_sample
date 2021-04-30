@@ -21,30 +21,32 @@ class _TrendListViewState extends State<TrendListView> {
         direction: Axis.horizontal,
         children: <Widget>[
           Container(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              width: 70.0,
-              height: 70.0,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      fit: BoxFit.fill, image: NetworkImage(itemData.avatar))),
+              child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  width: 70.0,
+                  height: 70.0,
+                  decoration: itemData.avatars.isNotEmpty
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(itemData.avatars[0])))
+                      : BoxDecoration())),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  '${itemData.repo}',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 5),
+                Text('Stars : ${itemData.stars}')
+              ],
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                '${itemData.name}',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.clip,
-              ),
-              SizedBox(height: 5),
-              Text('Built By : ${itemData.author}', textAlign: TextAlign.left),
-              Text('Stars : ${itemData.stars}')
-            ],
-          ),
+          )
         ],
       ),
     );
@@ -88,14 +90,13 @@ class _TrendListViewState extends State<TrendListView> {
   Future<List<GithubTrendItem>> _getTrendList(Language language) async {
     if (language != null) {
       final endPoint =
-          'https://github-trending-api.now.sh/repositories?language=${language.id}&since=monthly';
-      final response = await http.get(endPoint);
+          'https://trendings.herokuapp.com/repo?lang=${language.id}&since=weekly';
+      final response = await http.get(Uri.parse(endPoint));
 
-      if (response.statusCode == 200) {
-        Iterable body = json.decode(response.body);
-        List<GithubTrendItem> items =
-            body.map((value) => GithubTrendItem.fromJson(value)).toList();
-        return items;
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        Map<String, dynamic> body = json.decode(response.body);
+        Iterable items = body["items"];
+        return items.map((value) => GithubTrendItem.fromJson(value)).toList();
       } else {
         throw Exception('Failed to load github trend');
       }
