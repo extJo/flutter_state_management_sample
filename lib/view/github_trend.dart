@@ -25,9 +25,10 @@ class GithubTrendPage extends StatefulWidget {
   _GithubTrendPageState createState() => _GithubTrendPageState();
 
   static _GithubTrendPageState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(InheritedGithubTrendPage)
-            as InheritedGithubTrendPage)
-        .trendPageState;
+    final InheritedGithubTrendPage page =
+        context.dependOnInheritedWidgetOfExactType<InheritedGithubTrendPage>();
+    assert(page != null, 'No FrogColor found in context');
+    return page.trendPageState;
   }
 }
 
