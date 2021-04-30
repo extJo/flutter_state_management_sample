@@ -44,7 +44,7 @@ class LanguageDropDownState extends State<LanguageDropDown> {
                       parseJson(snapshot.data.toString());
 
                   return DropdownButton(
-                    hint: Text(languages[0].id),
+                    hint: Text("Choose Language"),
                     value: selectedLanguage,
                     onChanged: _dropDownSelect,
                     items: languages
